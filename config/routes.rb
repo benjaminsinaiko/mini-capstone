@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get"/carolinareaper" => "products#carolina_reaper"
+  get"/habanero" => "products#habanero"
+  get"/cayenne" => "products#cayenne"
+  get"/jalapeno" => "products#jalapeno"
+  get"/peppers" => "products#all_peppers"
 end
