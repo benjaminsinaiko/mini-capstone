@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+class V1::ProductsController < ApplicationController
   def carolina_reaper
     pepper = Product.first
     render json: pepper

@@ -1,4 +1,7 @@
 require "unirest"
+require "pp"
+require "tty-table"
+
 system "clear"
 
 while true
@@ -18,23 +21,32 @@ while true
   if input == "1"
     response = Unirest.get("http://localhost:3000/carolinareaper")
     pepper = response.body
-    puts pepper
+    # pepper_name = response.body["name"]
+    # pepper_species = response.body["species"]
+    # pepper_description = response.body["description"]
+    # pepper_price = response.body["price"]
+    # pepper_image = response.body["price"]
+    # table = TTY::Table.new ['name', 'species', 'description', 'price', 'image'], ['pepper_name', 'pepper_species', 'pepper_description', 'pepper_price', 'pepper_image']
+    # table.render(:ascii)
+    
+    pp pepper
   elsif input == "2"
     response = Unirest.get("http://localhost:3000/habanero")
     pepper = response.body
-    puts pepper
+    pp pepper
   elsif input == "3"
     response = Unirest.get("http://localhost:3000/cayenne")
     pepper = response.body
-    puts pepper
+    pp pepper
   elsif input == "4"
     response = Unirest.get("http://localhost:3000/jalapeno")
     pepper = response.body
-    puts pepper
+    pp pepper
   elsif input == "5"
     response = Unirest.get("http://localhost:3000/peppers")
     pepper = response.body
-    puts pepper
+    # table = TTY::Table.new ['name', 'species', 'description', 'price', 'image'], 
+    pp pepper
   elsif input == "q"
     break
   else
