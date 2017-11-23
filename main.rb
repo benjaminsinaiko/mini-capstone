@@ -4,6 +4,8 @@ require "pp"
 system "clear"
 puts "Welcome to the Pepper App!"
 puts "[1] See all peppers"
+puts "  [1.1] Search for a pepper"
+puts "  [1.2] Sort by price"
 puts "[2] Create a pepper"
 puts "[3] See one pepper"
 puts "[4] Update a pepper"
@@ -13,6 +15,17 @@ input = gets.chomp
 
 if input == "1"
   response = Unirest.get("http://localhost:3000/v1/peppers")
+  peppers = response.body
+  pp peppers
+elsif input == "1.1"
+  print "Enter search terms: "
+  search_terms = gets.chomp
+  puts "Here are the matching peppers"
+  response = Unirest.get("http://localhost:3000/v1/peppers?search=#{search_terms}")
+  peppers = response.body
+  pp peppers
+elsif input == "1.2"
+  response = Unirest.get("http://localhost:3000/v1/peppers?price=")
   peppers = response.body
   pp peppers
 elsif input == "2"
@@ -29,7 +42,13 @@ elsif input == "2"
   params["species"] = gets.chomp
   response = Unirest.post("http://localhost:3000/v1/peppers", parameters: params)
   pepper = response.body
-  pp pepper
+  if pepper["errors"]
+    puts
+    puts "No good!"
+    p pepper["errors"]
+  else
+    pp pepper
+  end
 elsif input == "3"
   print "Pick a pepper by id: "
   pepper_id = gets.chomp

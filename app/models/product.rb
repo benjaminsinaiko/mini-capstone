@@ -1,8 +1,8 @@
 class Product < ApplicationRecord
-  # def price_num
-  #   price_num = price.sub("$", "").to_f
-  #   return price_num
-  # end
+  validates :name, :price, presence: true
+  validates :name, uniqueness: true
+  validates :price, numericality: {greater_than: 0 }
+  validates :description, length: { maximum: 500 }
 
   def tax
     tax = 0.09 * price

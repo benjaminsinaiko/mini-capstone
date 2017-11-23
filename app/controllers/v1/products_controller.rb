@@ -1,6 +1,12 @@
 class V1::ProductsController < ApplicationController
   def index
-    peppers = Product.all
+    peppers = Product.all.order(:id => :asc)
+    if params[:search]
+      peppers = peppers.where("name ILIKE ?", "%#{params[:search]}%")
+    end
+    if params[:price]
+      peppers = Product.all.order(:price => :asc)
+    end
     render json: peppers.as_json
   end
 
@@ -12,8 +18,11 @@ class V1::ProductsController < ApplicationController
       description: params["description"],
       species: params["species"]
     )
-    pepper.save
-    render json: pepper.as_json
+    if pepper.save
+      render json: pepper.as_json
+    else
+      render json: {errors: pepper.errors.full_messages}, status: :bad_request
+    end
   end
 
   def show
@@ -30,8 +39,11 @@ class V1::ProductsController < ApplicationController
     pepper.image = params["image"] || pepper.image
     pepper.description = params["description"] || pepper.description
     pepper.species = params["species"] || pepper.species
-    pepper.save
-    render json: pepper.as_json
+    if pepper.save
+      render json: pepper.as_json
+    else
+      render json: {errors: pepper.errors.full_messages}, status: :bad_request
+    end
   end
 
   def destroy
