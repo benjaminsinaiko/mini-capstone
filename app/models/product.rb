@@ -4,13 +4,15 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than: 0 }
   validates :description, length: { maximum: 500 }
 
-  def supplier
-    Supplier.find_by(id: self.supplier_id)
-  end
+  belongs_to :supplier
+  # def supplier
+  #   Supplier.find_by(id: self.supplier_id)
+  # end
 
-  def image
-    Image.where(product_id: self.id)
-  end
+  has_many :images
+  # def image
+  #   Image.where(product_id: self.id)
+  # end
 
   def tax
     tax = 0.09 * price
@@ -31,12 +33,11 @@ class Product < ApplicationRecord
       id: id,
       name: name,
       price: price,
-      image: image,
       description: description,
       is_discounted: is_discounted,
       tax: "$#{tax}",
       total: "$#{total}",
-      image: image,
+      images: images.as_json,
       supplier: supplier.as_json
     }
   end

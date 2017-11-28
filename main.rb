@@ -10,6 +10,10 @@ puts "[2] Create a pepper"
 puts "[3] See one pepper"
 puts "[4] Update a pepper"
 puts "[5] Delete a pepper"
+puts
+puts "[signup] Signup (create a user)"
+puts
+puts "[q] Quit"
 
 input = gets.chomp
 
@@ -84,5 +88,18 @@ elsif input == "5"
   pepper_id = gets.chomp
   response = Unirest.delete("http://localhost:3000/v1/peppers/#{pepper_id}")
   pp response.body
+elsif input == "signup"
+  params = {}
+  print "Name: "
+  params[:name] = gets.chomp
+  print "Email: "
+  params[:email] = gets.chomp
+  print "Password confirmation: "
+  params[:password_confirmation] = gets.chomp
+  response = Unirest.post("http://localhost:3000/v1/users", parameters: params)
+  pp response.body
+# elsif input == "q"
+#   puts "Goodbye!"
+#   break  
 end
 
