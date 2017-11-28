@@ -4,6 +4,14 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than: 0 }
   validates :description, length: { maximum: 500 }
 
+  def supplier
+    Supplier.find_by(id: self.supplier_id)
+  end
+
+  def image
+    Image.where(product_id: self.id)
+  end
+
   def tax
     tax = 0.09 * price
     return tax.round(2)
@@ -27,7 +35,9 @@ class Product < ApplicationRecord
       description: description,
       is_discounted: is_discounted,
       tax: "$#{tax}",
-      total: "$#{total}"
+      total: "$#{total}",
+      image: image,
+      supplier: supplier.as_json
     }
   end
 end

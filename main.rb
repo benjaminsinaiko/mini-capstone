@@ -74,7 +74,7 @@ elsif input == "4"
   print "Enter the updated species(#{pepper["species"]}): "
   params["species"] = gets.chomp
 
-  params.delete_if {|key,value| value.empty?}
+  params.delete_if {|value| value.empty?}
 
   response = Unirest.patch("http://localhost:3000/v1/peppers/#{pepper_id}", parameters: params)
   pepper = response.body
