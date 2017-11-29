@@ -62,6 +62,18 @@ while true
     response = Unirest.get("http://localhost:3000/v1/peppers/#{pepper_id}")
     pepper = response.body
     pp pepper
+    puts
+    print "Order (Y/N)? "
+    input = gets.chomp
+    if input == "Y"
+      params = {}
+      params[:pepper_id] = pepper_id
+      print "How many? "
+      params[:quantity] = gets.chomp
+      response = Unirest.post("http://localhost:3000/v1/orders", parameters: params)
+      order = response.body
+      pp order
+    end 
   elsif input == "4"
     print "Which pepper id would you like to update? "
     pepper_id = gets.chomp
