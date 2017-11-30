@@ -6,15 +6,15 @@ class V1::OrdersController < ApplicationController
 
   def create
     pepper = Product.find_by(id: params[:pepper_id])
-    quantity = params[:quantity]
-    # subtotal = pepper.price * quantity
+    quantity = params[:quantity].to_d
+    subtotal = pepper.price * quantity
 
     order = Order.new(
       product_id: params[:pepper_id],
       quantity: quantity,
-      # subtotal: subtotal,
-      # tax: subtotal * product_id.tax,
-      total: pepper.total,
+      subtotal: subtotal,
+      tax: subtotal * pepper.tax,
+      total: pepper.total * quantity,
       user_id: current_user.id
     )
     if order.save
