@@ -1,4 +1,6 @@
 class V1::OrdersController < ApplicationController
+  before_action :authenticate_user
+
   def index
     orders = current_user.orders
     render json: orders.as_json
@@ -20,7 +22,7 @@ class V1::OrdersController < ApplicationController
     if order.save
       render json: order.as_json
     else
-      render json: {errors: order.errors.full_messages}, status: :bad_request
+      render json: {errors: order.errors.as_json(full_messages: true)}, status: :bad_request
     end
   end
 end
