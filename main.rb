@@ -12,6 +12,8 @@ while true
   puts "[4] Update a pepper"
   puts "[5] Delete a pepper"
   puts
+  puts "[6] Show Orders"
+  puts
   puts "[signup] Signup (create a user)"
   puts "[login] Login (create create json token)"
   puts "[logout] Logout (create delete token)"
@@ -103,6 +105,10 @@ while true
     pepper_id = gets.chomp
     response = Unirest.delete("http://localhost:3000/v1/peppers/#{pepper_id}")
     pp response.body
+  elsif input == "6"
+    response = Unirest.get("http://localhost:3000/v1/orders")
+    orders = response.body
+    pp orders
   elsif input == "signup"
     params = {}
     print "Name: "
