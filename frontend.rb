@@ -28,22 +28,28 @@ class Frontend
 
       input = gets.chomp
 
-      if input == "1"
+      def show_peppers
         response = Unirest.get("http://localhost:3000/v1/peppers")
         peppers = response.body
         pp peppers
-      elsif input == "1.1"
+      end
+
+      def search_pepper
         print "Enter search terms: "
         search_terms = gets.chomp
         puts "Here are the matching peppers"
         response = Unirest.get("http://localhost:3000/v1/peppers?search=#{search_terms}")
         peppers = response.body
         pp peppers
-      elsif input == "1.2"
+      end
+
+      def sort_peppers_by_price
         response = Unirest.get("http://localhost:3000/v1/peppers?price=")
         peppers = response.body
         pp peppers
-      elsif input == "2"
+      end
+
+      def create_pepper
         params = {}
         print "Enter a pepper name: "
         params["name"] = gets.chomp
@@ -64,7 +70,9 @@ class Frontend
         else
           pp pepper
         end
-      elsif input == "3"
+      end
+
+      def show_pepper_by_id
         print "Pick a pepper by id: "
         pepper_id = gets.chomp
         response = Unirest.get("http://localhost:3000/v1/peppers/#{pepper_id}")
@@ -81,8 +89,10 @@ class Frontend
           response = Unirest.post("http://localhost:3000/v1/orders", parameters: params)
           order = response.body
           pp order
-        end 
-      elsif input == "4"
+        end
+      end
+
+      def update_pepper_by_id
         print "Which pepper id would you like to update? "
         pepper_id = gets.chomp
 
@@ -106,16 +116,22 @@ class Frontend
         response = Unirest.patch("http://localhost:3000/v1/peppers/#{pepper_id}", parameters: params)
         pepper = response.body
         pp pepper
-      elsif input == "5"
+      end
+
+      def delete_pepper_by_id
         print "Which recipe id do you want to destroy? "
         pepper_id = gets.chomp
         response = Unirest.delete("http://localhost:3000/v1/peppers/#{pepper_id}")
         pp response.body
-      elsif input == "6"
+      end
+
+      def show_orders
         response = Unirest.get("http://localhost:3000/v1/orders")
         orders = response.body
         pp orders
-      elsif input == "signup"
+      end
+
+      def signup
         params = {}
         print "Name: "
         params[:name] = gets.chomp
@@ -127,7 +143,9 @@ class Frontend
         params[:password_confirmation] = gets.chomp
         response = Unirest.post("http://localhost:3000/v1/users", parameters: params)
         pp response.body
-      elsif input == "login"
+      end
+
+      def login
         puts "Login to the app"
         params = {}
         print "Email: "
@@ -143,12 +161,38 @@ class Frontend
         jwt = response.body["jwt"]
         # Include the jwt in the headers of any future web requests
         Unirest.default_header("Authorization", "Bearer #{jwt}")
-      elsif input == "loutout"
+      end
+
+      def logout
         jwt = ""
         Unirest.clear_default_headers()
+      end
+
+      if input == "1"
+        show_peppers
+      elsif input == "1.1"
+        search_pepper
+      elsif input == "1.2"
+        sort_peppers_by_price
+      elsif input == "2"
+        create_pepper
+      elsif input == "3"
+        show_pepper_by_id
+      elsif input == "4"
+        update_pepper_by_id
+      elsif input == "5"
+        delete_pepper_by_id
+      elsif input == "6"
+        show_orders
+      elsif input == "signup"
+        signup
+      elsif input == "login"
+        login
+      elsif input == "loutout"
+        logout
       elsif input == "q"
         puts "Goodbye!"
-        break  
+        break
       end
       puts
       puts "Press enter to continue"
