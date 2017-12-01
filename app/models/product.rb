@@ -4,6 +4,9 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than: 0 }
   validates :description, length: { maximum: 500 }
 
+  has_many :category_products
+  has_many :categories, through: :category_products
+
   belongs_to :supplier
   # def supplier
   #   Supplier.find_by(id: self.supplier_id)
@@ -37,8 +40,9 @@ class Product < ApplicationRecord
       is_discounted: is_discounted,
       tax: "$#{tax}",
       total: "$#{total}",
-      images: images.as_json,
-      supplier: supplier.as_json
+      # images: images.as_json,
+      supplier: supplier.as_json,
+      categories: categories.as_json
     }
   end
 end
