@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     get "/carted_products" => "carted_products#index"
     post "carted_products" => "carted_products#create"
+    patch "carted_products/:id" => "carted_products#update"
     post "/users" => "users#create"
 
     get "/peppers" => "products#index"

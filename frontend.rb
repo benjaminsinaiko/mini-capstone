@@ -21,6 +21,7 @@ class Frontend
       puts "[6] Show Orders"
       puts "[7] Show Carted Products"
       puts "[8] Purchase Items In Cart"
+      puts "[9] Remove Item From Cart"
       puts
       puts "[signup] Signup (create a user)"
       puts "[login] Login (create create json token)"
@@ -145,6 +146,13 @@ class Frontend
         pp purchase_order
       end
 
+      def remove_carted_product
+        print "Which item would you like to remove? "
+        carted_product_id = gets.chomp
+        response = Unirest.patch("http://localhost:3000/v1/carted_products/#{carted_product_id}", parameters: {id: carted_product_id})
+        pp response.body
+      end
+
       def signup
         params = {}
         print "Name: "
@@ -202,6 +210,8 @@ class Frontend
         show_carted_products
       elsif input == "8"
         create_order
+      elsif input == "9"
+        remove_carted_product
       elsif input == "signup"
         signup
       elsif input == "login"

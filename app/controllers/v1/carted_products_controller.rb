@@ -17,7 +17,19 @@ class V1::CartedProductsController < ApplicationController
     if carted_product.save
       render json: carted_product.as_json, status: :create
     else
-      render json: {errors: carted_product.errors.full_messaegs}, statuts: :bad_request
+      render json: {errors: carted_product.errors.full_messages}, statuts: :bad_request
     end 
+  end
+
+  def update
+    carted_product_id = params[:id]
+    carted_product = CartedProduct.find_by(user_id: current_user.id, id: carted_product_id)
+    if carted_product.status == "carted"
+      carted_product.update(status: "removed")
+      carted_product.save
+      render json: {message: "Item removed from cart"}
+    else
+      render json: {errors: carted_product.errors.full_messages}, status: :bad_request
+    end
   end
 end
