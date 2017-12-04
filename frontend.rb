@@ -19,6 +19,8 @@ class Frontend
       puts "[5] Delete a pepper"
       puts
       puts "[6] Show Orders"
+      puts "[7] Show Carted Products"
+      puts "[8] Purchase Items In Cart"
       puts
       puts "[signup] Signup (create a user)"
       puts "[login] Login (create create json token)"
@@ -86,7 +88,7 @@ class Frontend
           params[:pepper_id] = pepper_id
           print "How many? "
           params[:quantity] = gets.chomp
-          response = Unirest.post("http://localhost:3000/v1/orders", parameters: params)
+          response = Unirest.post("http://localhost:3000/v1/carted_products", parameters: params)
           order = response.body
           pp order
         end
@@ -129,6 +131,18 @@ class Frontend
         response = Unirest.get("http://localhost:3000/v1/orders")
         orders = response.body
         pp orders
+      end
+
+      def show_carted_products
+        response = Unirest.get("http://localhost:3000/v1/carted_products")
+        carted_products = response.body
+        pp carted_products
+      end
+
+      def create_order
+        response = Unirest.post("http://localhost:3000/v1/orders")
+        purchase_order = response.body
+        pp purchase_order
       end
 
       def signup
@@ -184,6 +198,10 @@ class Frontend
         delete_pepper_by_id
       elsif input == "6"
         show_orders
+      elsif input == "7"
+        show_carted_products
+      elsif input == "8"
+        create_order
       elsif input == "signup"
         signup
       elsif input == "login"
