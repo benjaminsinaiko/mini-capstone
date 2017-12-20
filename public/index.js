@@ -1,20 +1,30 @@
-/* global axios */
-axios.get("http://localhost:3000/v1/peppers").then(function(response) {
-  var products = response.data;
-  console.log(products);
+/* global Vue, VueRouter, axios */
 
-  var template = document.querySelector("#product-card");
-  var productContainer = document.querySelector(".row");
+var HomePage = {
+  template: "#home-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      products: []
+    };
+  },
+  mounted: function() {
+    axios.get("http://localhost:3000/v1/peppers").then(
+      function(response) {
+        this.products = response.data;
+        console.log(this.products);
+      }.bind(this)
+    );
+  },
+  methods: {},
+  computed: {}
+};
 
-  products.forEach(function(product) {
-    // productContainer.appendChild(template.content.cloneNode(true));
-    var clone = template.content.cloneNode(true);
-
-    clone.querySelector(".card-title").innerText = product.name;
-    clone.querySelector(".card-text").innerText = product.description;
-    clone.querySelector(".card-img-top").src = product.images[0]["images"];
-
-    productContainer.appendChild(clone);
-  });
+var router = new VueRouter({
+  routes: [{ path: "/", component: HomePage }]
 });
 
+var app = new Vue({
+  el: "#app",
+  router: router
+});
