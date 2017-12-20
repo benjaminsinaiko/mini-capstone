@@ -1,0 +1,8 @@
+body {
+  font-family: Futura,"Trebuchet MS",Arial,sans-serif;
+  background-image: url('background.png');
+}
+
+.jumbotron {
+  background-color: #e26a6a;
+}
