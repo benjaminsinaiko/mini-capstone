@@ -23,9 +23,10 @@ class V1::ProductsController < ApplicationController
     pepper = Product.new(
       name: params["name"],
       price: params["price"],
-      image: params["image"],
+      # image: params["image"],
       description: params["description"],
-      species: params["species"]
+      species: params["species"],
+      supplier_id: 1
     )
     if pepper.save
       render json: pepper.as_json

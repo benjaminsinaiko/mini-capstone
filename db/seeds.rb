@@ -33,4 +33,5 @@
 # Image.create(image_url:"https://cdn.thehippyseedcompany.com/wp-content/uploads/2017/06/jalapeno.jpg", product_id:"4")
 # Image.create(image_url:"http://www.seedsofchange.com/seedswfs/pepper_padron.jpg", product_id:"5")
 # Image.create(image_url:"https://cdn.shopify.com/s/files/1/0915/1060/products/carolina-reaper-2-hot-pepper-pepper-joes.jpg?v=1475680256", product_id:"1")
+# Image.create(image_url:"https://cdn.thehippyseedcompany.com/wp-content/uploads/2017/06/Bhut-Jolokia-web-1-1.jpg", product_id:"7")
 
