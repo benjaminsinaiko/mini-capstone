@@ -6,7 +6,9 @@ var HomePage = {
     return {
       message: "Welcome to Vue.js!",
       products: [],
-      pepperFilter: ""
+      productFilter: "",
+      sortAttribute: "name",
+      sortAscending: true
     };
   },
   mounted: function() {
@@ -18,13 +20,29 @@ var HomePage = {
     );
   },
   methods: {
-    isValidPepper: function(inputPepper) {
-      return inputPepper.name
+    isValidProduct: function(inputProduct) {
+      return inputProduct.name
         .toLowerCase()
-        .includes(this.pepperFilter.toLowerCase());
+        .includes(this.productFilter.toLowerCase());
+    },
+    changeSortAttribute: function(inputAttribute) {
+      this.sortAttribute = inputAttribute;
+      this.sortAscending = !this.sortAscending;
     }
   },
-  computed: {}
+  computed: {
+    sortedProducts: function() {
+      return this.products.sort(
+        function(product1, product2) {
+          if (this.sortAscending === true) {
+            return product1[this.sortAttribute] > product2[this.sortAttribute];
+          } else {
+            return product1[this.sortAttribute] < product2[this.sortAttribute];
+          }
+        }.bind(this)
+      );
+    }
+  }
 };
 
 var PeppersNew = {
